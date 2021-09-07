@@ -74,13 +74,13 @@ def hint():
 
 
 # Labels
-untranslated_text = Label(root, text="", font=("Helvetica", 36))
+untranslated_text = Label(root, text="", font=("Ostrich Sans", 36, 'bold'))
 untranslated_text.pack(pady=50)
 
 answer_label = Label(root, text="")
 answer_label.pack(pady=20)
 
-my_entry = Entry(root, font=("Helvetica", 18))
+my_entry = Entry(root, font=("Ostrich Sans", 18))
 my_entry.pack(pady=20)
 
 # Create Buttons
