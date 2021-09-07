@@ -5,6 +5,13 @@ root = Tk()
 root.title('Flashcards')
 root.geometry("375x667")
 
+# Define Image
+bg = PhotoImage(file="B:\DOWNLOADS ARCHIVE\FlashCard_GUI.png")
+# Create Label
+my_label = Label(root, image=bg)
+my_label.place(x=0, y=0, relwidth=1, relheight=1)
+
+
 words = []
 while True:
     add_card_choice = input("Would you like to add a new card (y/n)? or remove a card (r)")
@@ -26,6 +33,7 @@ while True:
 count = len(words)
 print(count)
 
+
 def next():
     global hinter, hint_count
     # Clear screen
@@ -40,14 +48,14 @@ def next():
     global random_word
     random_word = randint(0, count-1)
     # Update label with the untranslated word
-    untranslated_text.config(text=words[random_word][0])
+    untranslated_text.config(text=words[random_word])
 
 
 def answer():
-    if my_entry.get().capitalize() == words[random_word][1]:
-        answer_label.config(text=f"Correct! {words[random_word][0]} is {words[random_word][1]}")
+    if my_entry.get().lower() == words[random_word]:
+        answer_label.config(text=f"Correct! {words[random_word]} is {words[random_word]}")
     else:
-        answer_label.config(text=f"Incorrect! {words[random_word][0]} is not {my_entry.get().capitalize()}")
+        answer_label.config(text=f"Incorrect! {words[random_word]} is not {my_entry.get().lower()}")
 
 
 # Keep Track Of the Hints
@@ -59,8 +67,8 @@ def hint():
     global hint_count
     global hinter
 
-    if hint_count < len(words[random_word][1]):
-        hinter = hinter + words[random_word][1][hint_count]
+    if hint_count < len(words[random_word]):
+        hinter = hinter + words[random_word][hint_count]
         hint_label.config(text=hinter)
         hint_count += 1
 
