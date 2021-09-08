@@ -5,11 +5,6 @@ root = Tk()
 root.title('Flashcards')
 root.geometry("375x667")
 
-# Define Image
-bg = PhotoImage(file="B:\DOWNLOADS ARCHIVE\FlashCard_GUI.png")
-# Create Label
-my_label = Label(root, image=bg)
-my_label.place(x=0, y=0, relwidth=1, relheight=1)
 
 words = []
 while True:
@@ -46,6 +41,7 @@ def next():
     # Make a random selection from the list
     global random_word
     random_word = randint(0, count-1)
+    word1 = words[random_word]
     # Update label with the untranslated word
     untranslated_text.config(text=words[random_word])
 
