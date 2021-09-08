@@ -11,7 +11,6 @@ bg = PhotoImage(file="B:\DOWNLOADS ARCHIVE\FlashCard_GUI.png")
 my_label = Label(root, image=bg)
 my_label.place(x=0, y=0, relwidth=1, relheight=1)
 
-
 words = []
 while True:
     add_card_choice = input("Would you like to add a new card (y/n)? or remove a card (r)")
@@ -53,9 +52,9 @@ def next():
 
 def answer():
     if my_entry.get().lower() == words[random_word]:
-        answer_label.config(text=f"Correct! {words[random_word]} is {words[random_word]}")
+        answer_label.config(text=f"Correct! {words[random_word]} means {my_entry.get().lower}")
     else:
-        answer_label.config(text=f"Incorrect! {words[random_word]} is not {my_entry.get().lower()}")
+        answer_label.config(text=f"Incorrect! {words[random_word]} does not mean {my_entry.get().lower()}")
 
 
 # Keep Track Of the Hints
