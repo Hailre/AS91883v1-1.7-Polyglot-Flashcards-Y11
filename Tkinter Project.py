@@ -39,7 +39,7 @@ my_entry = Entry(root, font=("Ostrich Sans", 18))
 my_entry.pack(pady=20)
 
 
-def next():
+def nextcard():
     global hinter, hint_count
     # Clear screen
     answer_label.config(text="")
@@ -88,7 +88,7 @@ button_frame.pack(pady=20)
 answer_button = Button(button_frame, text="Answer", command=answer)
 answer_button.grid(row=0, column=0, padx=20)
 
-next_button = Button(button_frame, text="Next", command=next)
+next_button = Button(button_frame, text="Next", command=nextcard)
 next_button.grid(row=0, column=1, )
 
 hint_button = Button(button_frame, text="Hint", command=hint)
@@ -99,6 +99,6 @@ hint_label = Label(root, text="")
 hint_label.pack(pady=20)
 
 # Run next function when program starts
-next()
+nextcard()
 
 root.mainloop()
