@@ -5,6 +5,7 @@ root = Tk()
 root.title('Flashcards')
 root.geometry("375x667")
 
+global random_word
 
 words = []
 while True:
@@ -27,6 +28,16 @@ while True:
 count = len(words)
 print(count)
 
+# Labels
+untranslated_text = Label(root, text="", font=("Ostrich Sans", 36, 'bold'))
+untranslated_text.pack(pady=50)
+
+answer_label = Label(root, text="")
+answer_label.pack(pady=20)
+
+my_entry = Entry(root, font=("Ostrich Sans", 18))
+my_entry.pack(pady=20)
+
 
 def next():
     global hinter, hint_count
@@ -38,19 +49,21 @@ def next():
     hinter = ""
     hint_count = 0
 
-    # Make a random selection from the list
-    global random_word
-    random_word = randint(0, count-1)
-    word1 = words[random_word]
-    # Update label with the untranslated word
-    untranslated_text.config(text=words[random_word])
+
+# Make a random selection from the list
+random_word = randint(0, count-1)
+
+word1 = words[random_word][0]
+word2 = words[random_word][1]
+# Update label with the untranslated word
+untranslated_text.set(text=word1)
 
 
 def answer():
-    if my_entry.get().lower() == words[random_word]:
-        answer_label.config(text=f"Correct! {words[random_word]} means {my_entry.get().lower}")
+    if my_entry.get().lower() == word1:
+        answer_label.config(text=f"Correct! {word1} means {word2}")
     else:
-        answer_label.config(text=f"Incorrect! {words[random_word]} does not mean {my_entry.get().lower()}")
+        answer_label.config(text=f"Incorrect! {word1} does not mean {my_entry.get().lower()}")
 
 
 # Keep Track Of the Hints
@@ -67,16 +80,6 @@ def hint():
         hint_label.config(text=hinter)
         hint_count += 1
 
-
-# Labels
-untranslated_text = Label(root, text="", font=("Ostrich Sans", 36, 'bold'))
-untranslated_text.pack(pady=50)
-
-answer_label = Label(root, text="")
-answer_label.pack(pady=20)
-
-my_entry = Entry(root, font=("Ostrich Sans", 18))
-my_entry.pack(pady=20)
 
 # Create Buttons
 button_frame = Frame(root)
