@@ -1,5 +1,5 @@
 from tkinter import *
-from random import randint
+from random import *
 
 root = Tk()
 root.title('Flashcards')
@@ -29,9 +29,6 @@ count = len(words)
 print(count)
 
 # Labels
-untranslated_text = Label(root, text="", font=("Ostrich Sans", 36, 'bold'))
-untranslated_text.pack(pady=50)
-
 answer_label = Label(root, text="")
 answer_label.pack(pady=20)
 
@@ -51,12 +48,16 @@ def nextcard():
 
 
 # Make a random selection from the list
-random_word = randint(0, count-1)
+random_word = choice(words)
 
-word1 = words[random_word][0]
-word2 = words[random_word][1]
+untranslated_text = Label(root, text="", font=("Ostrich Sans", 36, 'bold'))
+untranslated_text.pack(pady=50)
+
+word1 = random_word
+word2 = random_word[1]
 # Update label with the untranslated word
-untranslated_text.set(text=word1)
+
+untranslated_text.configure(text=word1)
 
 
 def answer():
@@ -75,8 +76,8 @@ def hint():
     global hint_count
     global hinter
 
-    if hint_count < len(words[random_word]):
-        hinter = hinter + words[random_word][hint_count]
+    if hint_count < len(random_word[0]):
+        hinter = hinter + random_word[1][hint_count]
         hint_label.config(text=hinter)
         hint_count += 1
 
