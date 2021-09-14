@@ -7,7 +7,7 @@ root.geometry("375x667")
 
 global random_word
 
-words = []
+words = {}
 while True:
     add_card_choice = input("Would you like to add a new card (y/n)? or remove a card (r)")
     if str.lower(add_card_choice) == "n":
@@ -15,14 +15,12 @@ while True:
     elif str.lower(add_card_choice) == "r":
         print("Removing:", words.pop())
     else:
-        untranslated = input("Untranslated Word: ")
         translated = input("Translated Word: ")
-        words.append(untranslated)
-        words.append(translated)
-    # convert list into tuple
-    lst = tuple(words)
-    # print tuple
-    print(lst)
+        untranslated = input("Untranslated Word: ")
+    words[translated] = untranslated
+    print(words)
+
+word1, word2 = choice(list(words.items()))
 
 # get a count of our word list
 count = len(words)
@@ -47,21 +45,15 @@ def nextcard():
     hint_count = 0
 
 
-# Make a random selection from the list
-random_word = choice(words)
-
 untranslated_text = Label(root, text="", font=("Ostrich Sans", 36, 'bold'))
 untranslated_text.pack(pady=50)
 
-word1 = random_word
-word2 = random_word[1]
 # Update label with the untranslated word
-
 untranslated_text.configure(text=word1)
 
 
 def answer():
-    if my_entry.get().lower() == word1:
+    if my_entry.get().lower() == word2:
         answer_label.config(text=f"Correct! {word1} means {word2}")
     else:
         answer_label.config(text=f"Incorrect! {word1} does not mean {my_entry.get().lower()}")
@@ -76,8 +68,8 @@ def hint():
     global hint_count
     global hinter
 
-    if hint_count < len(random_word[0]):
-        hinter = hinter + random_word[1][hint_count]
+    if hint_count < len(word2):
+        hinter = hinter + word2[hint_count]
         hint_label.config(text=hinter)
         hint_count += 1
 
