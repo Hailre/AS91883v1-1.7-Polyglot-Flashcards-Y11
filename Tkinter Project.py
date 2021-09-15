@@ -15,16 +15,13 @@ while True:
     elif str.lower(add_card_choice) == "r":
         print("Removing:", words.pop())
     else:
-        translated = input("Translated Word: ")
         untranslated = input("Untranslated Word: ")
-    words[translated] = untranslated
+        translated = input("Translation: ")
+    words[untranslated] = translated
     print(words)
 
 word1, word2 = choice(list(words.items()))
 
-# get a count of our word list
-count = len(words)
-print(count)
 
 # Labels
 answer_label = Label(root, text="")
@@ -44,12 +41,11 @@ def nextcard():
     hinter = ""
     hint_count = 0
 
+    untranslated_text = Label(root, text="", font=("Ostrich Sans", 36, 'bold'))
+    untranslated_text.pack(pady=50)
 
-untranslated_text = Label(root, text="", font=("Ostrich Sans", 36, 'bold'))
-untranslated_text.pack(pady=50)
-
-# Update label with the untranslated word
-untranslated_text.configure(text=word1)
+    # Update label with the untranslated word
+    untranslated_text.configure(text=next(iter(words)))
 
 
 def answer():
