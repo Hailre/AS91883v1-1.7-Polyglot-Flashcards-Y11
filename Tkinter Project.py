@@ -17,7 +17,7 @@ while True:
     else:
         untranslated = input("Untranslated Word: ")
         translated = input("Translation: ")
-    words[untranslated] = translated
+        words[untranslated] = translated
     print(words)
 
 word1, word2 = choice(list(words.items()))
@@ -41,11 +41,8 @@ def nextcard():
     hinter = ""
     hint_count = 0
 
-    untranslated_text = Label(root, text="", font=("Ostrich Sans", 36, 'bold'))
-    untranslated_text.pack(pady=50)
-
     # Update label with the untranslated word
-    untranslated_text.configure(text=next(iter(words)))
+    untranslated_text.configure(text="")
 
 
 def answer():
@@ -69,6 +66,9 @@ def hint():
         hint_label.config(text=hinter)
         hint_count += 1
 
+
+untranslated_text = Label(root, text="", font=("Ostrich Sans", 36, 'bold'))
+untranslated_text.pack(pady=50)
 
 # Create Buttons
 button_frame = Frame(root)
