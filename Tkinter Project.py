@@ -13,14 +13,14 @@ while True:
     if str.lower(add_card_choice) == "n":
         break
     elif str.lower(add_card_choice) == "r":
-        print("Removing:", words.pop())
+        print("Removing:", words.popitem())
     else:
         untranslated = input("Untranslated Word: ")
         translated = input("Translation: ")
         words[untranslated] = translated
     print(words)
 
-word1, word2 = choice(list(words.items()))
+#word1, word2 = choice(list(words.items()))
 
 
 # Labels
@@ -31,7 +31,7 @@ my_entry = Entry(root, font=("Ostrich Sans", 18))
 my_entry.pack(pady=20)
 
 
-def nextcard():
+def nextcard(words):
     global hinter, hint_count
     # Clear screen
     answer_label.config(text="")
@@ -40,9 +40,10 @@ def nextcard():
     # Reset Hint word
     hinter = ""
     hint_count = 0
-
+    # Get random dictionary value and key and put it into a variable...
+    word1, word2 = choice(list(words.items()))
     # Update label with the untranslated word
-    untranslated_text.configure(text="")
+    untranslated_text.configure(text=word1)
 
 
 def answer():
@@ -67,7 +68,7 @@ def hint():
         hint_count += 1
 
 
-untranslated_text = Label(root, text="", font=("Ostrich Sans", 36, 'bold'))
+untranslated_text = Label(root, text="", font=("Ostrich Sans", 12, 'bold'))
 untranslated_text.pack(pady=50)
 
 # Create Buttons
@@ -77,7 +78,7 @@ button_frame.pack(pady=20)
 answer_button = Button(button_frame, text="Answer", command=answer)
 answer_button.grid(row=0, column=0, padx=20)
 
-next_button = Button(button_frame, text="Next", command=nextcard)
+next_button = Button(button_frame, text="Next", command=lambda: nextcard(words))
 next_button.grid(row=0, column=1, )
 
 hint_button = Button(button_frame, text="Hint", command=hint)
@@ -88,6 +89,6 @@ hint_label = Label(root, text="")
 hint_label.pack(pady=20)
 
 # Run next function when program starts
-nextcard()
+nextcard(words)
 
 root.mainloop()
