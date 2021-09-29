@@ -20,8 +20,7 @@ while True:
         words[untranslated] = translated
     print(words)
 
-#word1, word2 = choice(list(words.items()))
-
+word1, word2 = choice(list(words.items()))
 
 # Labels
 answer_label = Label(root, text="")
@@ -31,7 +30,7 @@ my_entry = Entry(root, font=("Ostrich Sans", 18))
 my_entry.pack(pady=20)
 
 
-def nextcard(words):
+def nextcard():
     global hinter, hint_count
     # Clear screen
     answer_label.config(text="")
@@ -41,9 +40,14 @@ def nextcard(words):
     hinter = ""
     hint_count = 0
     # Get random dictionary value and key and put it into a variable...
-    word1, word2 = choice(list(words.items()))
+    MyNewList = []
+        for value in MyList:
+        MyNewList.append(value)
+        print(MyNewList)
+        MyNewList.insert(0, 2)
+        print(MyNewList)
     # Update label with the untranslated word
-    untranslated_text.configure(text=word1)
+        untranslated_text.configure(text=word1)
 
 
 def answer():
@@ -78,7 +82,7 @@ button_frame.pack(pady=20)
 answer_button = Button(button_frame, text="Answer", command=answer)
 answer_button.grid(row=0, column=0, padx=20)
 
-next_button = Button(button_frame, text="Next", command=lambda: nextcard(words))
+next_button = Button(button_frame, text="Next", command=nextcard)
 next_button.grid(row=0, column=1, )
 
 hint_button = Button(button_frame, text="Hint", command=hint)
@@ -89,6 +93,6 @@ hint_label = Label(root, text="")
 hint_label.pack(pady=20)
 
 # Run next function when program starts
-nextcard(words)
+nextcard()
 
 root.mainloop()
