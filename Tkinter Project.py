@@ -40,14 +40,11 @@ def nextcard():
     hinter = ""
     hint_count = 0
     # Get random dictionary value and key and put it into a variable...
-    MyNewList = []
-        for value in MyList:
-        MyNewList.append(value)
-        print(MyNewList)
-        MyNewList.insert(0, 2)
-        print(MyNewList)
+    for key, value in words.items():
+        print(key)
+        words[key] = value
     # Update label with the untranslated word
-        untranslated_text.configure(text=word1)
+        untranslated_text.configure(text=key)
 
 
 def answer():
