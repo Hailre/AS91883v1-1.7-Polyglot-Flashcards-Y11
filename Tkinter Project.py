@@ -14,10 +14,12 @@ while True:
         break
     elif str.lower(add_card_choice) == "r":
         print("Removing:", words.popitem())
-    else:
+    elif str.lower(add_card_choice) == "y":
         untranslated = input("Untranslated Word: ")
         translated = input("Translation: ")
         words[untranslated] = translated
+    else:
+        print("Please enter y (add card), r (remove card) or n (finish card creation)")
     print(words)
 
 word1, word2 = choice(list(words.items()))
@@ -26,7 +28,7 @@ word1, word2 = choice(list(words.items()))
 answer_label = Label(root, text="")
 answer_label.pack(pady=20)
 
-my_entry = Entry(root, font=("Ostrich Sans", 18))
+my_entry = Entry(root, font=("Fanwood", 18))
 my_entry.pack(pady=20)
 
 
@@ -40,11 +42,10 @@ def nextcard():
     hinter = ""
     hint_count = 0
     # Get random dictionary value and key and put it into a variable...
-    for key, value in words.items():
-        print(key)
-        words[key] = value
+    for untranslated in words:
+        print(untranslated, ":",words[untranslated])
     # Update label with the untranslated word
-        untranslated_text.configure(text=key)
+        untranslated_text.configure(text=untranslated)
 
 
 def answer():
@@ -69,7 +70,7 @@ def hint():
         hint_count += 1
 
 
-untranslated_text = Label(root, text="", font=("Ostrich Sans", 12, 'bold'))
+untranslated_text = Label(root, text="", font=("Gauge", 12, 'bold'))
 untranslated_text.pack(pady=50)
 
 # Create Buttons
