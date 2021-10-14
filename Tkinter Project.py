@@ -1,58 +1,82 @@
 from tkinter import *
 from random import *
+import random
 
 root = Tk()
-root.title('Flashcards')
-root.geometry("375x667")
 
 global random_word
 
 words = {}
 while True:
-    add_card_choice = input("Would you like to add a new card (y/n)? or remove a card (r)")
+    add_card_choice = input("Would you like to add a new card (y/n)? or remove the last card (r)")
     if str.lower(add_card_choice) == "n":
         break
     elif str.lower(add_card_choice) == "r":
-        print("Removing:", words.popitem())
+        if len(words) == 0:
+            print("There are currently no Flashcards to remove, please choose 'y' if you would like to create a card.")
+        else:
+            print("Card:", words.popitem(), "has been removed")
     elif str.lower(add_card_choice) == "y":
-        untranslated = input("Untranslated Word: ")
-        translated = input("Translation: ")
+        untranslated = input("Untranslated Word: ").capitalize()
+        translated = input("Translation: ").capitalize()
         words[untranslated] = translated
     else:
         print("Please enter y (add card), r (remove card) or n (finish card creation)")
     print(words)
 
-word1, word2 = choice(list(words.items()))
+word1, word2 = random.choice(list(words.items()))
+
+canvas = Canvas(
+    root,
+    bg="#f2f3fe",
+    height=594,
+    width=330,
+    bd=0,
+    highlightthickness=0,
+    relief="ridge")
+canvas.place(x=0, y=0)
 
 # Labels
-answer_label = Label(root, text="")
-answer_label.pack(pady=20)
+entry0_img = PhotoImage(file=f"img_textBox0.png")
+entry0_bg = canvas.create_image(
+    165.0, 343.5,
+    image=entry0_img)
 
-my_entry = Entry(root, font=("Fanwood", 18))
-my_entry.pack(pady=20)
+my_entry = Entry(
+    bd=0,
+    bg="#e4e5ff",
+    highlightthickness=0)
+
+my_entry.place(
+    x=40.0, y=329,
+    width=250.0,
+    height=27)
 
 
+# noinspection PyGlobalUndefined
 def nextcard():
-    global hinter, hint_count
+    global hinter, hint_count, key
     # Clear screen
-    answer_label.config(text="")
+    canvas.itemconfig(text="", tagOrId=answer_label)
     my_entry.delete(0, END)
-    hint_label.config(text="")
+    canvas.itemconfig(text="", tagOrId=hint_label)
     # Reset Hint word
     hinter = ""
     hint_count = 0
-    # Get random dictionary value and key and put it into a variable...
-    for untranslated in words:
-        print(untranslated, ":",words[untranslated])
-    # Update label with the untranslated word
-        untranslated_text.configure(text=untranslated)
+    # Get random dictionary value and key and put it into a variable to use as itemconfig text
+    random_card = ([(k, v) for k, v in words.items()])
+    random.shuffle(random_card)
+    for key, value in random_card:
+        pass
+    canvas.itemconfig(text=key, tagOrId=untranslated_text)
 
 
 def answer():
-    if my_entry.get().lower() == word2:
-        answer_label.config(text=f"Correct! {word1} means {word2}")
+    if my_entry.get().capitalize() == word2:
+        canvas.itemconfig(text=f"CORRECT! {word1.upper()} MEANS {word2.upper()}", tagOrId=answer_label)
     else:
-        answer_label.config(text=f"Incorrect! {word1} does not mean {my_entry.get().lower()}")
+        canvas.itemconfig(text=f"INCORRECT! {word1.upper()} DOES NOT MEAN {my_entry.get().upper()}",
+                          tagOrId=answer_label)
 
 
 # Keep Track Of the Hints
@@ -66,31 +90,79 @@ def hint():
 
     if hint_count < len(word2):
         hinter = hinter + word2[hint_count]
-        hint_label.config(text=hinter)
+        canvas.itemconfig(text=hinter, tagOrId=hint_label)
         hint_count += 1
 
 
-untranslated_text = Label(root, text="", font=("Gauge", 12, 'bold'))
-untranslated_text.pack(pady=50)
+root.geometry("330x594")
+root.iconbitmap('triangles.ico')
+root.configure(bg="#f2f3fe")
 
-# Create Buttons
-button_frame = Frame(root)
-button_frame.pack(pady=20)
+background_img = PhotoImage(file=f"background.png")
+background = canvas.create_image(
+    165.0, 297.0,
+    image=background_img)
 
-answer_button = Button(button_frame, text="Answer", command=answer)
-answer_button.grid(row=0, column=0, padx=20)
+next_button_image = PhotoImage(file=f"img0.png")
+next_button = Button(
+    image=next_button_image,
+    borderwidth=0,
+    highlightthickness=0,
+    command=nextcard,
+    relief="flat")
 
-next_button = Button(button_frame, text="Next", command=nextcard)
-next_button.grid(row=0, column=1, )
+next_button.place(
+    x=41, y=472,
+    width=247,
+    height=57)
 
-hint_button = Button(button_frame, text="Hint", command=hint)
-hint_button.grid(row=0, column=2, padx=20)
+answer_button_image = PhotoImage(file=f"img1.png")
+answer_button = Button(
+    image=answer_button_image,
+    borderwidth=0,
+    highlightthickness=0,
+    command=answer,
+    relief="flat")
+
+answer_button.place(
+    x=32, y=380,
+    width=107,
+    height=35)
+
+hint_button_image = PhotoImage(file=f"img2.png")
+hint_button = Button(
+    image=hint_button_image,
+    borderwidth=0,
+    highlightthickness=0,
+    command=hint,
+    relief="flat")
+
+hint_button.place(
+    x=191, y=380,
+    width=107,
+    height=35)
+
+answer_label = canvas.create_text(
+    164.5, 180.0,
+    text="",
+    fill="#000000",
+    font=("Roboto-Bold", int(8)))
 
 # Create Hint Label
-hint_label = Label(root, text="")
-hint_label.pack(pady=20)
+hint_label = canvas.create_text(
+    164, 275.0,
+    text="",
+    fill="#000000",
+    font=("Roboto-Black", int(9)))
+
+untranslated_text = canvas.create_text(
+    164, 240.0,
+    text="",
+    fill="#000000",
+    font=("Roboto-Black", int(23)))
 
 # Run next function when program starts
 nextcard()
 
+root.resizable(False, False)
 root.mainloop()

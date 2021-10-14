@@ -1,4 +1,4 @@
-MyList = [0,1,2,3,4,5]
+MyList = [0, 1, 2, 3, 4, 5]
 print(MyList[1])
 MyList.append(6)
 print(MyList)
