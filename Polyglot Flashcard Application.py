@@ -5,24 +5,63 @@ import random
 root = Tk()
 global random_word
 
+
+# noinspection PyGlobalUndefined
+def create_collection():
+    global collection_name
+    print("≿━━━━༺POLYGLOT༻━━━━≾\n⊱.⋅LANGUAGE FLASHCARDS⋅.⊰")
+    while True:
+        create_collection_choice = input("\n (c) Create Collection"
+                                         "\n (x) Exit App ")
+        while True:
+            if str.lower(create_collection_choice) == "c":
+                collection_name = input("Collection Name (Max. 16 characters): ").upper()[:16]
+                if collection_name == "":
+                    print("Please enter a collection name")
+                else:
+                    print(f"\n≿━━━━༺{collection_name}༻━━━━≾")
+                    return
+            elif str.lower(create_collection_choice) == "x":
+                exit()
+            else:
+                print("Please enter a 'c' (create collection) or 'x' (exit application)")
+                break
+
+
+create_collection()
+
+global collection_name
 # Create dictionary from user input
 words = {}
 while True:
-    add_card_choice = input("Would you like to add a new card (y/n)? or remove the last card (r)")
+    add_card_choice = input("\nWould you like to:"
+                            "\n (y) Add a new card"
+                            "\n (n) Present your flashcards"
+                            "\n (r) Remove the last card"
+                            "\n (x) Cancel card creation"
+                            "\n  ")
     if str.lower(add_card_choice) == "n":
-        break
+        if len(words) == 0:
+            print(
+                "\nThere are currently no Flashcards to present, please choose 'y' if you would like to create a card. \n     \n   ")
+        else:
+            print(f"Opening... {collection_name}")
+            break
     elif str.lower(add_card_choice) == "r":
         if len(words) == 0:
-            print("There are currently no Flashcards to remove, please choose 'y' if you would like to create a card.")
+            print(
+                "\nThere are currently no Flashcards to remove, please choose 'y' if you would like to create a card. \n     \n   ")
         else:
-            print("Card:", words.popitem(), "has been removed")
+            print("\nCard:", words.popitem(), "has been removed")
     elif str.lower(add_card_choice) == "y":
-        untranslated = input("Untranslated Word: ").capitalize()
-        translated = input("Translation: ").capitalize()
+        untranslated = input("\nUntranslated Word (Max. 12 characters): \n").capitalize()[:12]
+        translated = input("\nTranslation (Max. 16 characters): \n").capitalize()[:16]
         words[untranslated] = translated
+    elif str.lower(add_card_choice) == "x":
+        exit()
     else:
         print("Please enter y (add card), r (remove card) or n (finish card creation)")
-    print(words)
+    print(f'\n Current Flashcard sets: {words}')
 
 word1, word2 = random.choice(list(words.items()))
 
@@ -123,8 +162,8 @@ app_height = 594
 screen_width = root.winfo_screenwidth()
 screen_height = root.winfo_screenheight()
 
-x = (screen_width/2) - (app_width/2)
-y = (screen_height/2) - (app_height/2)
+x = (screen_width / 2) - (app_width / 2)
+y = (screen_height / 2) - (app_height / 2)
 
 # Set app scale and base information
 root.geometry(f'{app_width}x{app_height}+{int(x)}+{int(y)}')
@@ -194,7 +233,7 @@ answer_label = canvas.create_text(
     165, 165.0,
     text="",
     fill="#9D58FF",
-    font=("Roboto-Bold", 9, 'bold'))
+    font=("Roboto-Bold", 8, 'bold'))
 
 hint_label = canvas.create_text(
     165, 275.0,
@@ -207,6 +246,12 @@ untranslated_text = canvas.create_text(
     text="",
     fill="#000000",
     font=("Roboto-Bold", 28, 'bold'))
+
+collection_name_label = canvas.create_text(
+    164.5, 24.0,
+    text=f"{collection_name}",
+    fill="#ffffff",
+    font=("Roboto", 15, 'bold'))
 
 # Run next function when program starts
 nextcard()
