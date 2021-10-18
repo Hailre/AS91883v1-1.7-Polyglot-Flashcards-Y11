@@ -1,6 +1,7 @@
 from tkinter import *
 from random import *
 import random
+import re
 
 root = Tk()
 global random_word
@@ -55,16 +56,16 @@ while True:
             print("\nCard:", words.popitem(), "has been removed")
     elif str.lower(add_card_choice) == "y":
         untranslated = input("\nUntranslated Word (Max. 12 characters): \n").capitalize()[:12]
-        if untranslated.isalpha():
+        if any(x.isalpha() for x in untranslated) or any(x.isspace() for x in untranslated):
             pass
-        if not untranslated.isalpha():
+        else:
             print("Sorry! your text contained invalid information, "
                   "\nplease re-enter your information without any integers (1, 2 ,3) or symbols (- * $)")
             continue
         translated = input("\nTranslation (Max. 16 characters): \n").capitalize()[:16]
-        if translated.isalpha():
+        if any(x.isalpha() for x in translated) or any(x.isspace() for x in translated):
             pass
-        if not translated.isalpha():
+        else:
             print("Sorry! your text contained invalid information, "
                   "\nplease re-enter your information without any integers (1, 2 ,3) or symbols (- * $)")
             continue
