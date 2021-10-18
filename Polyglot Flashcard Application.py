@@ -1,7 +1,6 @@
 from tkinter import *
 from random import *
 import random
-import re
 
 root = Tk()
 global random_word
